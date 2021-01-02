@@ -5,35 +5,33 @@ import Home from "./components/Home";
 class App extends React.Component {
   state = {
     books: [],
-    apiUrl: "",
-  }
+  };
 
-  fetchBooks = async(apiUrl) => {
+  fetchBooks = async (apiUrl) => {
     try {
-      const responce = await fetch(`${apiUrl}/books`)
-      const books = await responce.json()
-      console.log(books.filter(book => book.category === "fantasy"))
+      const responce = await fetch(`${apiUrl}/books`);
+      const books = await responce.json();
+      console.log(books.filter((book) => book.category === "fantasy"));
       this.setState({
         books: books,
-      })
+      });
     } catch (e) {
-      console.log(e)
+      console.log(e);
     }
-  }
+  };
 
-  componentDidMount(){
-    const apiUrl = process.env.API_URL
-    this.fetchBooks(apiUrl)
-    this.setState({ apiUrl: apiUrl })
+  componentDidMount() {
+    const apiUrl = "https://heroku-books-api.herokuapp.com";
+    this.fetchBooks(apiUrl);
   }
-  render(){
-  return (
-    <div className="App">
-      <NavBar title="StriveBooks" />
-      <Home jumboTitle="Welcome to strivebooks" books={this.state.books} apiUrl={this.state.apiUrl} />
-    </div>
-  );
-}
+  render() {
+    return (
+      <div className="App">
+        <NavBar title="StriveBooks" books={this.state.books} />
+        <Home jumboTitle="Welcome to strivebooks" />
+      </div>
+    );
+  }
 }
 
 export default App;

@@ -43,8 +43,8 @@ class Home extends React.Component {
 
   fetchBooks = async() => {
     try {
-      const apiUrl = "http://localhost:3001"
-      const responce = await fetch(`${this.props.apiUrl}/books`)
+      const apiUrl = "https://heroku-books-api.herokuapp.com"
+      const responce = await fetch(`${apiUrl}/books`)
       const books = await responce.json()
       const history = books.filter(book => book.category === "history");
       const romance = books.filter(book => book.category === "romance");

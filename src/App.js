@@ -4,12 +4,12 @@ import Home from "./components/Home";
 
 class App extends React.Component {
   state = {
-    books: []
+    books: [],
+    apiUrl: "",
   }
 
-  fetchBooks = async() => {
+  fetchBooks = async(apiUrl) => {
     try {
-      const apiUrl = "http://localhost:3001"
       const responce = await fetch(`${apiUrl}/books`)
       const books = await responce.json()
       console.log(books.filter(book => book.category === "fantasy"))
@@ -22,13 +22,15 @@ class App extends React.Component {
   }
 
   componentDidMount(){
-    this.fetchBooks()
+    const apiUrl = process.env.API_URL
+    this.fetchBooks(apiUrl)
+    this.setState({ apiUrl: apiUrl })
   }
   render(){
   return (
     <div className="App">
-      <NavBar title="StriveBooks" books={this.state.books}/>
-      <Home jumboTitle="Welcome to strivebooks" />
+      <NavBar title="StriveBooks" />
+      <Home jumboTitle="Welcome to strivebooks" books={this.state.books} apiUrl={this.state.apiUrl} />
     </div>
   );
 }
